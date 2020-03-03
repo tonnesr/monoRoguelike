@@ -1,0 +1,16 @@
+e:\code\mono2\bin\Debug\netcoreapp2.0\mono2.deps.json
+e:\code\mono2\bin\Debug\netcoreapp2.0\mono2.runtimeconfig.json
+e:\code\mono2\bin\Debug\netcoreapp2.0\mono2.runtimeconfig.dev.json
+e:\code\mono2\bin\Debug\netcoreapp2.0\mono2.dll
+e:\code\mono2\bin\Debug\netcoreapp2.0\mono2.pdb
+e:\code\mono2\obj\Debug\netcoreapp2.0\mono2.csprojAssemblyReference.cache
+e:\code\mono2\obj\Debug\netcoreapp2.0\mono2.AssemblyInfoInputs.cache
+e:\code\mono2\obj\Debug\netcoreapp2.0\mono2.AssemblyInfo.cs
+e:\code\mono2\obj\Debug\netcoreapp2.0\mono2.dll
+e:\code\mono2\obj\Debug\netcoreapp2.0\mono2.pdb
+e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\tile\floor1.xnb
+e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\tile\wall1.xnb
+e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\player\playerFour.xnb
+e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\player\playerOne.xnb
+e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\player\playerThree.xnb
+e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\player\playerTwo.xnb

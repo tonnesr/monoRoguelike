@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>e:/code/mono2/Content/textures/player/playerFour.png</File>
+    <File>e:/code/mono2/Content/textures/player/playerOne.png</File>
+    <File>e:/code/mono2/Content/textures/player/playerThree.png</File>
+    <File>e:/code/mono2/Content/textures/player/playerTwo.png</File>
+    <File>e:/code/mono2/Content/textures/tile/floor1.png</File>
+    <File>e:/code/mono2/Content/textures/tile/wall1.png</File>
+  </SourceFiles>
+</SourceFileCollection>

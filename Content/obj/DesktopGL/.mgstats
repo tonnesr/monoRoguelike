@@ -1,0 +1,7 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"E:/code/mono2/Content/textures/player/playerFour.png","E:/code/mono2/Content/bin/DesktopGL/textures/player/playerFour.xnb","TextureProcessor","Texture2DContent",151,1109,0.1309466
+"E:/code/mono2/Content/textures/player/playerOne.png","E:/code/mono2/Content/bin/DesktopGL/textures/player/playerOne.xnb","TextureProcessor","Texture2DContent",237,1109,0.005998
+"E:/code/mono2/Content/textures/player/playerThree.png","E:/code/mono2/Content/bin/DesktopGL/textures/player/playerThree.xnb","TextureProcessor","Texture2DContent",241,1109,0.0069986
+"E:/code/mono2/Content/textures/player/playerTwo.png","E:/code/mono2/Content/bin/DesktopGL/textures/player/playerTwo.xnb","TextureProcessor","Texture2DContent",237,1109,0.0099962
+"E:/code/mono2/Content/textures/tile/floor1.png","E:/code/mono2/Content/bin/DesktopGL/textures/tile/floor1.xnb","TextureProcessor","Texture2DContent",371,1109,0.0059982
+"E:/code/mono2/Content/textures/tile/wall1.png","E:/code/mono2/Content/bin/DesktopGL/textures/tile/wall1.xnb","TextureProcessor","Texture2DContent",477,1109,0.0059981
