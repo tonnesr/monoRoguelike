@@ -1,6 +1,6 @@
 using mono2.src.mapping;
-using mono2.src.models;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace  mono2.src.entities 
 {
@@ -8,7 +8,9 @@ namespace  mono2.src.entities
     public Tile tile;
     public string name;
     public int health;
+    public Color color;
 
-    public abstract void move(Direction direction);
+    public abstract void update();
+    public abstract void update(KeyboardState keyboardState);
   }
 }

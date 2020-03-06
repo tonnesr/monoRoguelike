@@ -4,11 +4,12 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>e:/code/mono2/Content/textures/player/playerFour.png</File>
-    <File>e:/code/mono2/Content/textures/player/playerOne.png</File>
-    <File>e:/code/mono2/Content/textures/player/playerThree.png</File>
-    <File>e:/code/mono2/Content/textures/player/playerTwo.png</File>
-    <File>e:/code/mono2/Content/textures/tile/floor1.png</File>
-    <File>e:/code/mono2/Content/textures/tile/wall1.png</File>
+    <File>e:/code/mono2/Content/textures/entities/monster1.png</File>
+    <File>e:/code/mono2/Content/textures/entities/playerFour.png</File>
+    <File>e:/code/mono2/Content/textures/entities/playerOne.png</File>
+    <File>e:/code/mono2/Content/textures/entities/playerThree.png</File>
+    <File>e:/code/mono2/Content/textures/entities/playerTwo.png</File>
+    <File>e:/code/mono2/Content/textures/tiles/floor1.png</File>
+    <File>e:/code/mono2/Content/textures/tiles/wall1.png</File>
   </SourceFiles>
 </SourceFileCollection>

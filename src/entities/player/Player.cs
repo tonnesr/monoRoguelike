@@ -7,47 +7,43 @@ using mono2.src.loading;
 using System.Linq;
 using System;
 
-// TODO Store tiles in XML, or something?
-// FIXME the error comes from the content loader, (string array of names). 
-
-namespace mono2.src.entities.player 
+namespace mono2.src.entities.player
 {
   public class Player : Entity {
     public PlayerIndex playerIndex;
-    public Dictionary<string, Keys> keyMapping; // Load from file?
+    public Dictionary<string, Keys> keys;
     
-    public Player(PlayerIndex playerIndex, int spawnPosX, int spawnPosY) {
+    public Player(PlayerIndex playerIndex, int spawnPosX, int spawnPosY, Color? color = null) {
       this.playerIndex = playerIndex;
-      this.health = 100;
+      this.health = 100; // TODO
       this.name = $"player{playerIndex}";
       this.tile = new Tile(this.name, spawnPosX, spawnPosY, TileType.Entity);
-
-      this.keyMapping = getKeyMapping(this.playerIndex);
+      this.color = color != null ? (Color)color : Color.White;
+      this.keys = getKeys(this.playerIndex);
     }
 
-    private Dictionary<string, Keys> getKeyMapping(PlayerIndex playerIndex) { // TODO should just directly load based on the current player index instead.
-      // TODO make dynamic, and move? or?
-      Dictionary<string, string> keyMapping = new DataLoader().loadJsonFile<Dictionary<string, string>>("E:\\code\\mono2\\Content\\data\\KeyMapping.json");
-      Dictionary<string, Keys> keys = keyMapping.ToDictionary(item => item.Key, item => (Keys)Enum.Parse(typeof(Keys), item.Value));
-      return keys;
+    private Dictionary<string, Keys> getKeys(PlayerIndex playerIndex) {      
+      Dictionary<string, Keys> _keys = new DataLoader("Content\\data\\")
+        .loadJsonFile<Dictionary<string, string>>("KeyMapping.json")
+        .Where(item => item.Key.Contains($"p{(int)playerIndex}"))
+        .ToDictionary(item => item.Key, item => (Keys)Enum.Parse(typeof(Keys), item.Value));
+      return _keys;
     }
 
-    public override void move(Direction direction) {
-      switch(direction) {
-        case Direction.Up:
-          this.tile.Y -= 1;
-          break;
-        case Direction.Down:
-          this.tile.Y += 1;
-          break;
-        case Direction.Right:
-          this.tile.X += 1;
-          break;
-        case Direction.Left:
-          this.tile.X -= 1;
-          break;
-        default:
-          break;
+    public override void update() {}
+    public override void update(KeyboardState keyboardState) {
+      string propertyPrefix = $"p{(int)playerIndex}";
+      if (keyboardState.IsKeyDown(this.keys[$"{propertyPrefix}_up"])) {
+        this.tile.Y -= 1;
+      }
+      if (keyboardState.IsKeyDown(this.keys[$"{propertyPrefix}_down"])) {
+        this.tile.Y += 1;
+      }
+      if (keyboardState.IsKeyDown(this.keys[$"{propertyPrefix}_right"])) {
+        this.tile.X += 1;
+      }
+      if (keyboardState.IsKeyDown(this.keys[$"{propertyPrefix}_left"])) {
+        this.tile.X -= 1;
       }
     }
   }
