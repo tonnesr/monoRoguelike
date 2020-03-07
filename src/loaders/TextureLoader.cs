@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace mono2.src.loading 
 {
@@ -11,16 +10,17 @@ namespace mono2.src.loading
     private string location;
 
     public TextureLoader(ContentManager contentManager, string location, string[] texturesToLoad) {
-      this.contentManager = contentManager;
       this.location = location;
-      textures = loadTextures(texturesToLoad);
+      this.contentManager = contentManager;
+      this.textures = this.loadTextures(texturesToLoad);
     }
 
     private Dictionary<string, Texture2D> loadTextures(string[] texturesToLoad) {
       Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
 
-      foreach (string texture in texturesToLoad) {
-        textures.Add(texture, this.contentManager.Load<Texture2D>($"textures\\{location}\\{texture}"));
+      foreach (string textureName in texturesToLoad) {
+        Texture2D texture = this.contentManager.Load<Texture2D>($"textures\\{this.location}\\{textureName}");
+        textures.Add(textureName, texture);
       }
 
       return textures;

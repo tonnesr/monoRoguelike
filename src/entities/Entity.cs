@@ -1,6 +1,6 @@
 using mono2.src.mapping;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+using mono2.src.models;
 
 namespace  mono2.src.entities 
 {
@@ -9,8 +9,12 @@ namespace  mono2.src.entities
     public string name;
     public int health;
     public Color color;
+    public int speed;
+    public EntityType type;
 
-    public abstract void update();
-    public abstract void update(KeyboardState keyboardState);
+    public void setPos(Vector2 newPos) {
+      this.tile.X = (int)newPos.X;
+      this.tile.Y = (int)newPos.Y;
+    }
   }
 }

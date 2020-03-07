@@ -2,10 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using mono2.src.mapping;
-using mono2.src.loading;
 using mono2.src.entities.player;
-using System;
 using mono2.src.entities;
+using mono2.src.models;
+using System.Linq;
+using System.Collections.Generic;
+using System;
 
 namespace mono2
 {
@@ -15,59 +17,54 @@ namespace mono2
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     private TileMap map;
-    private TextureLoader tileTextures;
-    private TextureLoader entityTextures;
+    private PlayerController playerController;
+    private AiController monsterController;
+    private int framesSinceLastUpdate = 0;
 
     public Game1() {
-      graphics = new GraphicsDeviceManager(this);
-      graphics.PreferredBackBufferWidth = (int)mapSize.X * tileDiameter;
-      graphics.PreferredBackBufferHeight = (int)mapSize.Y * tileDiameter;
-      Content.RootDirectory = "Content";
-      IsMouseVisible = true;
+      this.graphics = new GraphicsDeviceManager(this);
+      this.graphics.PreferredBackBufferWidth = (int)mapSize.X * this.tileDiameter;
+      this.graphics.PreferredBackBufferHeight = (int)mapSize.Y * this.tileDiameter;
+      this.Content.RootDirectory = "Content";
+      this.IsMouseVisible = true;
+
+      this.monsterController = new AiController(EntityType.Monster);
+      this.playerController = new PlayerController();
     }
 
     protected override void Initialize() {
-      map = new TileMap(mapSize, Color.Gray);
-
+      map = new TileMap(this.tileDiameter, this.mapSize, this.Content, Color.Gray, new List<Entity>() { new Player(PlayerIndex.One, 1, 1, Color.OrangeRed), new Player(PlayerIndex.Two, 1, 1, Color.Teal) });
       base.Initialize();
     }
 
     protected override void LoadContent() {
       spriteBatch = new SpriteBatch(GraphicsDevice);
-
-      tileTextures = new TextureLoader(this.Content, "tiles", new string[] { "floor1", "wall1" }); // TODO Move to map's entities ???
-      entityTextures = new TextureLoader(this.Content, "entities", new string[] { "playerOne", "playerTwo", "monster1" }); // TODO Move to map's entities ???
     }
 
     protected override void Update(GameTime gameTime) {
       if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) { // TODO gamepad support inside of player class
-        Exit();
+        this.Exit();
       }
-
-      foreach (Entity entity in map.entities) {
-        if (entity is Player) {
-          entity.update(Keyboard.GetState());
-        } else {
-          entity.update();
-        } 
+      if (framesSinceLastUpdate > 4) {
+        foreach (Entity entity in this.map.entities.ToList()) {
+          if (entity is Player) {
+            entity.setPos(this.playerController.getMove(this.map, (Player)entity, Keyboard.GetState()));
+          } else {
+            entity.setPos(this.monsterController.getMove(this.map, entity));
+          }
+        }
+        framesSinceLastUpdate = 0;          
       }
-
+      framesSinceLastUpdate++;
       base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime) {
-      GraphicsDevice.Clear(Color.Black);
-      spriteBatch.Begin();
-      for (int i = 0; i < map.size.X; i++) {
-        for (int j = 0; j < map.size.Y; j++) {
-          Tile currentTile = map.map[i, j];
-          spriteBatch.Draw(tileTextures.getTexture(currentTile.symbol), new Vector2(currentTile.X * tileDiameter, currentTile.Y * tileDiameter), currentTile.color);
-        }
-      }
-      foreach (Entity entity in map.entities) {
-        spriteBatch.Draw(entityTextures.getTexture(entity.tile.symbol), new Vector2(entity.tile.X * tileDiameter, entity.tile.Y * tileDiameter), entity.color);
-      }
-      spriteBatch.End();
+      this.GraphicsDevice.Clear(Color.Black);
+      this.spriteBatch.Begin();
+        this.map.drawMap(spriteBatch);
+        this.map.drawEntities(spriteBatch);
+      this.spriteBatch.End();
       base.Draw(gameTime);
     }
   }
