@@ -30,32 +30,19 @@ namespace mono2.src.mapping
       this.size = size;
       this.color = color;
 
-      this.map = this.generateTileMap();
+      this.map = this.getMap();
 
-      this.entityTextures = new TextureLoader(contentManager, "entities", new string[] { "playerOne", "playerTwo", "monster1" });
-      this.tileTextures = new TextureLoader(contentManager, "tiles", new string[] { "wall1", "floor1" });
+      this.entityTextures = new TextureLoader(contentManager, "entities", new string[] { "playerOne", "playerTwo", "monster1" }); // TODO load larger textures based on tileDiameter, instead of spritebatch scale.
+      this.tileTextures = new TextureLoader(contentManager, "tiles", new string[] { "wall1", "floor1", "corridor1" }); // TODO load larger textures based on tileDiameter, instead of spritebatch scale.
       
       this.entities = players.Concat(this.populateEntities(this.map)).ToList();
+
+      Console.WriteLine($"Tile count: {this.map.Length}, Entity count: {this.entities.Count}");
     }
 
-    private Tile[,] generateTileMap() {
+    private Tile[,] getMap() {
       TileMapGenerator generator = new TileMapGenerator();
-
       Tile[,] _map = generator.generate(this.size);
-      
-      /*Random random = new Random();
-      Tile[,] _map = new Tile[this.size.width, this.size.height];
-      for (int x = 0; x < this.size.width; x++) {
-        for (int y = 0; y < this.size.height; y++) {
-          Tile newTile = new Tile("floor1", x, y, TileType.Floor, color, TileMovementType.Walkable);
-          if ((x == 0 || x == this.size.width - 1) || (y == 0 || y == this.size.height - 1)) {
-            newTile.symbol = "wall1";
-            newTile.type = TileType.Wall;
-            newTile.movement = TileMovementType.Impassable;
-          }
-          _map[x, y] = newTile;
-        }
-      }*/
       return _map;
     }
 
@@ -64,9 +51,9 @@ namespace mono2.src.mapping
 
       Random random = new Random();
       foreach(Tile tile in map) {
-        if (random.Next(0, 100) < 1 && tile.movement == TileMovementType.Walkable) {
-          entities.Add(new Enemy(EntityType.Monster, tile.X, tile.Y));
-        }
+          if (random.Next(0, 100) < 1 && tile.movement == TileMovementType.Walkable) {
+            entities.Add(new Enemy(EntityType.Monster, tile.X, tile.Y));
+          }
       }
       return entities;
     }
@@ -74,19 +61,12 @@ namespace mono2.src.mapping
     public void drawMap(SpriteBatch spriteBatch) {
       foreach (Tile tile in this.map) {
         spriteBatch.Draw(this.tileTextures.getTexture(tile.symbol), new Vector2(tile.X * this.tileDiameter, tile.Y * this.tileDiameter), tile.color);
-        
-        // TODO implement for reals?
-        //spriteBatch.Draw(this.tileTextures.getTexture(tile.symbol), new Vector2(tile.X * this.tileDiameter, tile.Y * this.tileDiameter), null, tile.color, 0f, Vector2.Zero, new Vector2(this.tileDiameter, this.tileDiameter), SpriteEffects.None, 0f);
       }
     }
 
     public void drawEntities(SpriteBatch spriteBatch) {
       foreach (Entity entity in this.entities) {
         spriteBatch.Draw(this.entityTextures.getTexture(entity.tile.symbol), new Vector2(entity.tile.X * this.tileDiameter, entity.tile.Y * this.tileDiameter), entity.tile.color);
-        
-        // TODO implement for reals?
-        // FIXME bugged, anything scaling goes wrong, way to large.
-        //spriteBatch.Draw(this.entityTextures.getTexture(entity.tile.symbol), new Vector2(entity.tile.X * this.tileDiameter, entity.tile.Y * this.tileDiameter), null, entity.tile.color, 0f, Vector2.Zero, new Vector2(this.tileDiameter, this.tileDiameter), SpriteEffects.None, 0f);
       }
     }
 
@@ -105,14 +85,14 @@ namespace mono2.src.mapping
     }
     
     public bool canWalk(int x, int y) {
-      try {
+      try { // TODO fix when implementing scrolling maps
         Tile tile = this.map[x, y];
-        if (tile.movement == TileMovementType.Impassable /*|| x < 0 || y < 0 || x > this.size.width || y > this.size.height*/) {
+        if (tile.movement == TileMovementType.Impassable) {
           return false;
         }
         return true;
-      } catch (Exception e) {
-        Console.WriteLine(e);
+      } catch (Exception) {
+        Console.WriteLine($"Illegal move at x:{x}, y: {y}");
         return false;
       }
     }

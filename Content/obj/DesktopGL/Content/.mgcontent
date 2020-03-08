@@ -9,6 +9,7 @@
     <File>e:/code/mono2/Content/textures/entities/playerOne.png</File>
     <File>e:/code/mono2/Content/textures/entities/playerThree.png</File>
     <File>e:/code/mono2/Content/textures/entities/playerTwo.png</File>
+    <File>e:/code/mono2/Content/textures/tiles/corridor1.png</File>
     <File>e:/code/mono2/Content/textures/tiles/floor1.png</File>
     <File>e:/code/mono2/Content/textures/tiles/wall1.png</File>
   </SourceFiles>

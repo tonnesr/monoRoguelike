@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using mono2.src.models.mapping;
 using mono2.src.models;
+using System.Linq;
 
 namespace mono2.src.mapping 
 {
@@ -18,22 +19,51 @@ namespace mono2.src.mapping
       int height = mapSize.height;
 
       Tile[,] map = new Tile[width, height];
-      List<Room> rooms = this.generateRooms(20, 3, 10, mapSize); // TODO 
-      Console.WriteLine(rooms.Count);
+      List<Room> rooms = this.generateRooms(50, 3, 6, mapSize); // TODO
+      List<Corridor> corridors = this.generateCorridors(rooms);
+      Console.WriteLine($"Room count: {rooms.Count}, Corridor count: {corridors.Count}");
       // TODO generate corridors
 
       for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
-          Tile newTile = new Tile("floor1", x, y, TileType.Floor, Color.Gray, TileMovementType.Walkable);
+          Tile newTile = new Tile("floor1", x, y, TileType.Floor, Color.Gray, TileMovementType.Walkable); // TODO remove with empty tile? (when implementing inside of rooms filling stuff v)
 
-          foreach (Room room in rooms) {
+          foreach (Room room in rooms) { // TODO fill inside of rooms with floor, not outside (need to fix spawning etc.)
             if (
-              (x == room.topLeftPosition.X && y == room.topLeftPosition.Y) || 
-              (x == room.bottomRightPosition.X && y == room.bottomRightPosition.Y) || 
-              (x == room.topLeftPosition.X && y == room.bottomRightPosition.Y) || 
-              (x == room.bottomRightPosition.X && y == room.topLeftPosition.Y)
+              (x >= room.topPos.X && x <= room.bottomPos.X && y == room.topPos.Y) || 
+              (x >= room.topPos.X && x <= room.bottomPos.X && y == room.bottomPos.Y) || 
+              (y >= room.topPos.Y && y <= room.bottomPos.Y && x == room.topPos.X) || 
+              (y >= room.topPos.Y && y <= room.bottomPos.Y && x == room.bottomPos.X)
             ) {
               newTile = new Tile("wall1", x, y, TileType.Wall, Color.Gray, TileMovementType.Impassable);
+              break;
+            }
+          }
+
+          foreach (Corridor corridor in corridors) {
+            if (
+              (x == corridor.topPos.X && y == corridor.topPos.Y) ||
+              (x == corridor.bottomPos.X && y == corridor.bottomPos.Y) // FIXME
+
+              /*(x == corridor.topPos.X && y <= corridor.bottomPos.Y && y >= corridor.topPos.Y) ||
+              (y == corridor.topPos.Y && x <= corridor.bottomPos.X && x >= corridor.topPos.X) ||
+              (x == corridor.bottomPos.X && y <= corridor.topPos.Y && y >= corridor.bottomPos.Y) ||
+              (y == corridor.bottomPos.Y && x <= corridor.topPos.X && x >= corridor.bottomPos.X)*/
+              
+              /*(x >= corridor.topPos.X && x <= corridor.bottomPos.X && y == corridor.topPos.Y) ||
+              (x <= corridor.topPos.X && x >= corridor.bottomPos.X && y == corridor.topPos.Y) ||
+              (y >= corridor.topPos.Y && y <= corridor.bottomPos.Y && x == corridor.topPos.X) ||
+              (y <= corridor.topPos.Y && y >= corridor.bottomPos.Y && x == corridor.topPos.X)*/
+
+              /*(x == corridor.topPos.X && y == corridor.topPos.Y) ||
+              (x == corridor.bottomPos.X && y == corridor.bottomPos.Y)*/
+
+              /*(x >= corridor.topPos.X && x <= corridor.bottomPos.X && y == corridor.topPos.Y) ||
+              (x >= corridor.topPos.X && x < corridor.bottomPos.X && y == corridor.bottomPos.Y) ||
+              (y >= corridor.topPos.Y && y <= corridor.bottomPos.Y && x == corridor.topPos.X) ||
+              (y >= corridor.topPos.Y && y <= corridor.bottomPos.Y && x == corridor.bottomPos.X)*/
+            ) {
+              newTile = new Tile("corridor1", x, y, TileType.Floor, Color.Gray, TileMovementType.Walkable);
               break;
             }
           }
@@ -50,26 +80,42 @@ namespace mono2.src.mapping
 
       Size newSize = new Size(0, 0);
       Vector2 newPos = Vector2.Zero;
-      bool failed = false;
+
       for (int r = 0; r < roomCount; r++) {
-        newSize = new Size(minRoomSize + random.Next(maxRoomSize - minRoomSize + 1), minRoomSize + random.Next(maxRoomSize - minRoomSize + 1));
-        newPos = new Vector2(random.Next((mapSize.width - newSize.width) - 1) + 1, random.Next((mapSize.height - newSize.height) - 1) + 1);
+        newSize = new Size(minRoomSize + this.random.Next(maxRoomSize - minRoomSize + 1), minRoomSize + this.random.Next(maxRoomSize - minRoomSize + 1));
+        newPos = new Vector2(this.random.Next((mapSize.width - newSize.width) - 1) + 1, this.random.Next((mapSize.height - newSize.height) - 1) + 1);
 
         Room newRoom = new Room(newPos, newSize);
         Vector2 newCenter = newRoom.getCenter();
 
-        failed = false;
-        foreach (Room room in rooms) {
-          if (newRoom.isOverlapping(room)) {
-            failed = true;
-            break;
-          }
+        if ((rooms.Where(room => room.isOverlapping(newRoom)).ToList()).Count <= 0) {
+          rooms.Add(newRoom);
         }
-
-        if (!failed) rooms.Add(newRoom);
       }
 
       return rooms;
+    }
+
+    private List<Corridor> generateCorridors(List<Room> rooms) {
+      List<Corridor> corridors = new List<Corridor>();
+
+      Room prevRoom = null;
+      foreach (Room room in rooms) {
+        if (prevRoom != null) {
+          Vector2 prevRoomCenter = prevRoom.getCenter();
+          Vector2 currentRoomCenter = room.getCenter();
+
+          //if (this.random.Next(0, 1) == 0) { // TODO different corridor alignment
+            corridors.Add(new Corridor(prevRoomCenter, new Vector2((int)prevRoomCenter.X, (int)currentRoomCenter.Y)));
+            corridors.Add(new Corridor(currentRoomCenter, new Vector2((int)prevRoomCenter.X, (int)currentRoomCenter.Y)));
+          /*} else {
+            corridors.Add(new Corridor());
+          }*/
+        }
+        prevRoom = room;
+      }
+
+      return corridors;
     }
   }
 }

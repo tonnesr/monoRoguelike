@@ -13,6 +13,7 @@ using System;
 namespace mono2
 {
   public class Game1 : Game {
+    // Screen size and game size should not be the same (larger scrolling map and menu)
     private int tileDiameter = 16;
     private Size mapSize = new Size(32, 32);
     private GraphicsDeviceManager graphics;
@@ -35,7 +36,7 @@ namespace mono2
 
     protected override void Initialize() {
       map = new TileMap(this.tileDiameter, this.mapSize, this.Content, Color.Gray, new List<Entity>() { new Player(PlayerIndex.One, 1, 1, Color.OrangeRed), new Player(PlayerIndex.Two, 1, 1, Color.Teal) });
-
+      
       base.Initialize();
     }
 

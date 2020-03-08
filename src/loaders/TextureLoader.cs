@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+// TODO add file not found error handling
+
 namespace mono2.src.loading 
 {
   public class TextureLoader {
