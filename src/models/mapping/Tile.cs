@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
-using mono2.src.models;
 
-namespace mono2.src.mapping 
+namespace mono2.src.models.mapping 
 {
   public class Tile {
     public string symbol;
@@ -11,7 +10,7 @@ namespace mono2.src.mapping
     public TileType type;
     public TileMovementType movement;
 
-    public Tile(string symbol, int x, int y, TileType type, TileMovementType movement = TileMovementType.Walkable, Color? color = null) {
+    public Tile(string symbol, int x, int y, TileType type, Color? color = null, TileMovementType movement = TileMovementType.Walkable) {
       this.symbol = symbol;
       this.X = x;
       this.Y = y;

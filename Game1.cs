@@ -5,6 +5,7 @@ using mono2.src.mapping;
 using mono2.src.entities.player;
 using mono2.src.entities;
 using mono2.src.models;
+using mono2.src.models.mapping;
 using System.Linq;
 using System.Collections.Generic;
 using System;
@@ -13,7 +14,7 @@ namespace mono2
 {
   public class Game1 : Game {
     private int tileDiameter = 16;
-    private Vector2 mapSize = new Vector2(32, 32);
+    private Size mapSize = new Size(32, 32);
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     private TileMap map;
@@ -23,8 +24,8 @@ namespace mono2
 
     public Game1() {
       this.graphics = new GraphicsDeviceManager(this);
-      this.graphics.PreferredBackBufferWidth = (int)mapSize.X * this.tileDiameter;
-      this.graphics.PreferredBackBufferHeight = (int)mapSize.Y * this.tileDiameter;
+      this.graphics.PreferredBackBufferWidth = mapSize.width * this.tileDiameter;
+      this.graphics.PreferredBackBufferHeight = mapSize.height * this.tileDiameter;
       this.Content.RootDirectory = "Content";
       this.IsMouseVisible = true;
 
@@ -34,6 +35,7 @@ namespace mono2
 
     protected override void Initialize() {
       map = new TileMap(this.tileDiameter, this.mapSize, this.Content, Color.Gray, new List<Entity>() { new Player(PlayerIndex.One, 1, 1, Color.OrangeRed), new Player(PlayerIndex.Two, 1, 1, Color.Teal) });
+
       base.Initialize();
     }
 

@@ -1,6 +1,7 @@
 using mono2.src.mapping;
 using Microsoft.Xna.Framework;
 using mono2.src.models;
+using mono2.src.models.mapping;
 
 namespace  mono2.src.entities 
 {
@@ -8,7 +9,6 @@ namespace  mono2.src.entities
     public Tile tile;
     public string name;
     public int health;
-    public Color color;
     public int speed;
     public EntityType type;
 

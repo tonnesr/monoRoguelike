@@ -1,4 +1,4 @@
-using mono2.src.mapping;
+using mono2.src.models.mapping;
 using mono2.src.models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -18,9 +18,8 @@ namespace mono2.src.entities.player
       this.playerIndex = playerIndex;
       this.health = 100; // TODO
       this.name = $"player{playerIndex}";
-      this.tile = new Tile(this.name, spawnPosX, spawnPosY, TileType.Entity);
+      this.tile = new Tile(this.name, spawnPosX, spawnPosY, TileType.Entity, color != null ? (Color)color : Color.White);
       this.speed = 1;
-      this.color = color != null ? (Color)color : Color.White;
       this.keys = loadKeyBindings(this.playerIndex);
     }
 

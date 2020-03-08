@@ -5,5 +5,8 @@
     { "tag": "FIXME", "iconColor": "red", "highlightColor": "#F44336", "scope": "workspace" },
     { "tag": "NOTE", "iconColor": "orange", "highlightColor": "#FFB300", "scope": "file" },
     { "tag": "REVIEW", "iconColor": "green", "highlightColor": "#64DD17", "scope": "workspace" }
-  ]
+  ],
+  "files.exclude": {
+    "**/.git": false
+  }
 }

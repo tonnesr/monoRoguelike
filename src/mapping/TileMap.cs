@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using mono2.src.loading;
 using Microsoft.Xna.Framework.Content;
 using System.Linq;
+using mono2.src.models.mapping;
 
 // TODO move map generation to another class
 // TODO better map generation (random levels and entities)
@@ -17,14 +18,14 @@ namespace mono2.src.mapping
 {
   public class TileMap {
     private int tileDiameter;
-    public Vector2 size;
+    public Size size;
     public Tile[,] map;
     private Color color;
     public List<Entity> entities;
     private TextureLoader entityTextures;
     private TextureLoader tileTextures;
 
-    public TileMap(int tileDiameter, Vector2 size, ContentManager contentManager, Color color, List<Entity> players) {
+    public TileMap(int tileDiameter, Size size, ContentManager contentManager, Color color, List<Entity> players) {
       this.tileDiameter = tileDiameter;
       this.size = size;
       this.color = color;
@@ -38,19 +39,23 @@ namespace mono2.src.mapping
     }
 
     private Tile[,] generateTileMap() {
-      Random random = new Random();
-      Tile[,] _map = new Tile[(int)this.size.X, (int)this.size.Y];
-      for (int x = 0; x < (int)this.size.X; x++) {
-        for (int y = 0; y < (int)this.size.Y; y++) {
-          Tile newTile = new Tile("floor1", x, y, TileType.Floor, TileMovementType.Walkable, color);
-          if ((x == 0 || x == (int)this.size.X - 1) || (y == 0 || y == (int)this.size.Y - 1)) {
+      TileMapGenerator generator = new TileMapGenerator();
+
+      Tile[,] _map = generator.generate(this.size);
+      
+      /*Random random = new Random();
+      Tile[,] _map = new Tile[this.size.width, this.size.height];
+      for (int x = 0; x < this.size.width; x++) {
+        for (int y = 0; y < this.size.height; y++) {
+          Tile newTile = new Tile("floor1", x, y, TileType.Floor, color, TileMovementType.Walkable);
+          if ((x == 0 || x == this.size.width - 1) || (y == 0 || y == this.size.height - 1)) {
             newTile.symbol = "wall1";
             newTile.type = TileType.Wall;
             newTile.movement = TileMovementType.Impassable;
           }
           _map[x, y] = newTile;
         }
-      }
+      }*/
       return _map;
     }
 
@@ -69,12 +74,19 @@ namespace mono2.src.mapping
     public void drawMap(SpriteBatch spriteBatch) {
       foreach (Tile tile in this.map) {
         spriteBatch.Draw(this.tileTextures.getTexture(tile.symbol), new Vector2(tile.X * this.tileDiameter, tile.Y * this.tileDiameter), tile.color);
+        
+        // TODO implement for reals?
+        //spriteBatch.Draw(this.tileTextures.getTexture(tile.symbol), new Vector2(tile.X * this.tileDiameter, tile.Y * this.tileDiameter), null, tile.color, 0f, Vector2.Zero, new Vector2(this.tileDiameter, this.tileDiameter), SpriteEffects.None, 0f);
       }
     }
 
     public void drawEntities(SpriteBatch spriteBatch) {
       foreach (Entity entity in this.entities) {
-        spriteBatch.Draw(this.entityTextures.getTexture(entity.tile.symbol), new Vector2(entity.tile.X * this.tileDiameter, entity.tile.Y * this.tileDiameter), entity.color);
+        spriteBatch.Draw(this.entityTextures.getTexture(entity.tile.symbol), new Vector2(entity.tile.X * this.tileDiameter, entity.tile.Y * this.tileDiameter), entity.tile.color);
+        
+        // TODO implement for reals?
+        // FIXME bugged, anything scaling goes wrong, way to large.
+        //spriteBatch.Draw(this.entityTextures.getTexture(entity.tile.symbol), new Vector2(entity.tile.X * this.tileDiameter, entity.tile.Y * this.tileDiameter), null, entity.tile.color, 0f, Vector2.Zero, new Vector2(this.tileDiameter, this.tileDiameter), SpriteEffects.None, 0f);
       }
     }
 
@@ -95,7 +107,7 @@ namespace mono2.src.mapping
     public bool canWalk(int x, int y) {
       try {
         Tile tile = this.map[x, y];
-        if (tile.movement == TileMovementType.Impassable || x < 0 || y < 0 || x > this.size.X || y > this.size.Y) {
+        if (tile.movement == TileMovementType.Impassable /*|| x < 0 || y < 0 || x > this.size.width || y > this.size.height*/) {
           return false;
         }
         return true;
