@@ -1,9 +1,10 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"E:/code/mono2/Content/textures/entities/monster1.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/monster1.xnb","TextureProcessor","Texture2DContent",265,1109,0.1328063
-"E:/code/mono2/Content/textures/entities/playerFour.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/playerFour.xnb","TextureProcessor","Texture2DContent",151,1109,0.0079913
-"E:/code/mono2/Content/textures/entities/playerOne.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/playerOne.xnb","TextureProcessor","Texture2DContent",237,1109,0.0069976
-"E:/code/mono2/Content/textures/entities/playerThree.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/playerThree.xnb","TextureProcessor","Texture2DContent",241,1109,0.0059991
-"E:/code/mono2/Content/textures/entities/playerTwo.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/playerTwo.xnb","TextureProcessor","Texture2DContent",237,1109,0.0089984
-"E:/code/mono2/Content/textures/tiles/corridor1.png","E:/code/mono2/Content/bin/DesktopGL/textures/tiles/corridor1.xnb","TextureProcessor","Texture2DContent",252,1109,0.0109949
-"E:/code/mono2/Content/textures/tiles/floor1.png","E:/code/mono2/Content/bin/DesktopGL/textures/tiles/floor1.xnb","TextureProcessor","Texture2DContent",371,1109,0.0069985
-"E:/code/mono2/Content/textures/tiles/wall1.png","E:/code/mono2/Content/bin/DesktopGL/textures/tiles/wall1.xnb","TextureProcessor","Texture2DContent",477,1109,0.0069969
+"E:/code/mono2/Content/textures/entities/monster1.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/monster1.xnb","TextureProcessor","Texture2DContent",265,1109,0.1259584
+"E:/code/mono2/Content/textures/entities/playerFour.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/playerFour.xnb","TextureProcessor","Texture2DContent",151,1109,0.011997
+"E:/code/mono2/Content/textures/entities/playerOne.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/playerOne.xnb","TextureProcessor","Texture2DContent",237,1109,0.0069978
+"E:/code/mono2/Content/textures/entities/playerThree.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/playerThree.xnb","TextureProcessor","Texture2DContent",241,1109,0.0099967
+"E:/code/mono2/Content/textures/entities/playerTwo.png","E:/code/mono2/Content/bin/DesktopGL/textures/entities/playerTwo.xnb","TextureProcessor","Texture2DContent",237,1109,0.0099974
+"E:/code/mono2/Content/textures/tiles/corridor1.png","E:/code/mono2/Content/bin/DesktopGL/textures/tiles/corridor1.xnb","TextureProcessor","Texture2DContent",252,1109,0.009997
+"E:/code/mono2/Content/textures/tiles/empty1.png","E:/code/mono2/Content/bin/DesktopGL/textures/tiles/empty1.xnb","TextureProcessor","Texture2DContent",139,1109,0.0059974
+"E:/code/mono2/Content/textures/tiles/floor1.png","E:/code/mono2/Content/bin/DesktopGL/textures/tiles/floor1.xnb","TextureProcessor","Texture2DContent",371,1109,0.0089977
+"E:/code/mono2/Content/textures/tiles/wall1.png","E:/code/mono2/Content/bin/DesktopGL/textures/tiles/wall1.xnb","TextureProcessor","Texture2DContent",477,1109,0.0069966

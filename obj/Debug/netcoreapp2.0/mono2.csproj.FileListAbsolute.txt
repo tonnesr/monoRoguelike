@@ -22,3 +22,4 @@ e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\entities\playerThree.xnb
 e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\entities\playerTwo.xnb
 e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\entities\monster1.xnb
 e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\tiles\corridor1.xnb
+e:\code\mono2\bin\Debug\netcoreapp2.0\Content\textures\tiles\empty1.xnb

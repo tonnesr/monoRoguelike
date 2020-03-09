@@ -33,7 +33,7 @@ namespace mono2.src.mapping
       this.map = this.getMap();
 
       this.entityTextures = new TextureLoader(contentManager, "entities", new string[] { "playerOne", "playerTwo", "monster1" }); // TODO load larger textures based on tileDiameter, instead of spritebatch scale.
-      this.tileTextures = new TextureLoader(contentManager, "tiles", new string[] { "wall1", "floor1", "corridor1" }); // TODO load larger textures based on tileDiameter, instead of spritebatch scale.
+      this.tileTextures = new TextureLoader(contentManager, "tiles", new string[] { "wall1", "floor1", "corridor1", "empty1" }); // TODO load larger textures based on tileDiameter, instead of spritebatch scale.
       
       this.entities = players.Concat(this.populateEntities(this.map)).ToList();
 

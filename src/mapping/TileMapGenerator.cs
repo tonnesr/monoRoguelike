@@ -19,7 +19,7 @@ namespace mono2.src.mapping
       int height = mapSize.height;
 
       Tile[,] map = new Tile[width, height];
-      List<Room> rooms = this.generateRooms(50, 3, 6, mapSize); // TODO
+      List<Room> rooms = this.generateRooms(100, 3, 10, mapSize); // TODO
       List<Corridor> corridors = this.generateCorridors(rooms);
       Console.WriteLine($"Room count: {rooms.Count}, Corridor count: {corridors.Count}");
       // TODO generate corridors
@@ -42,26 +42,10 @@ namespace mono2.src.mapping
 
           foreach (Corridor corridor in corridors) {
             if (
-              (x == corridor.topPos.X && y == corridor.topPos.Y) ||
-              (x == corridor.bottomPos.X && y == corridor.bottomPos.Y) // FIXME
-
-              /*(x == corridor.topPos.X && y <= corridor.bottomPos.Y && y >= corridor.topPos.Y) ||
-              (y == corridor.topPos.Y && x <= corridor.bottomPos.X && x >= corridor.topPos.X) ||
-              (x == corridor.bottomPos.X && y <= corridor.topPos.Y && y >= corridor.bottomPos.Y) ||
-              (y == corridor.bottomPos.Y && x <= corridor.topPos.X && x >= corridor.bottomPos.X)*/
-              
-              /*(x >= corridor.topPos.X && x <= corridor.bottomPos.X && y == corridor.topPos.Y) ||
-              (x <= corridor.topPos.X && x >= corridor.bottomPos.X && y == corridor.topPos.Y) ||
-              (y >= corridor.topPos.Y && y <= corridor.bottomPos.Y && x == corridor.topPos.X) ||
-              (y <= corridor.topPos.Y && y >= corridor.bottomPos.Y && x == corridor.topPos.X)*/
-
-              /*(x == corridor.topPos.X && y == corridor.topPos.Y) ||
-              (x == corridor.bottomPos.X && y == corridor.bottomPos.Y)*/
-
-              /*(x >= corridor.topPos.X && x <= corridor.bottomPos.X && y == corridor.topPos.Y) ||
-              (x >= corridor.topPos.X && x < corridor.bottomPos.X && y == corridor.bottomPos.Y) ||
-              (y >= corridor.topPos.Y && y <= corridor.bottomPos.Y && x == corridor.topPos.X) ||
-              (y >= corridor.topPos.Y && y <= corridor.bottomPos.Y && x == corridor.bottomPos.X)*/
+              (x <= corridor.bottomPos.X && x >= corridor.topPos.X && y == corridor.topPos.Y) ||
+              (x <= corridor.topPos.X && x >= corridor.bottomPos.X && y == corridor.bottomPos.Y) ||
+              (y <= corridor.bottomPos.Y && y >= corridor.topPos.Y && x == corridor.topPos.X) ||
+              (y <= corridor.topPos.Y && y >= corridor.bottomPos.Y && x == corridor.bottomPos.X) 
             ) {
               newTile = new Tile("corridor1", x, y, TileType.Floor, Color.Gray, TileMovementType.Walkable);
               break;
@@ -105,12 +89,13 @@ namespace mono2.src.mapping
           Vector2 prevRoomCenter = prevRoom.getCenter();
           Vector2 currentRoomCenter = room.getCenter();
 
-          //if (this.random.Next(0, 1) == 0) { // TODO different corridor alignment
-            corridors.Add(new Corridor(prevRoomCenter, new Vector2((int)prevRoomCenter.X, (int)currentRoomCenter.Y)));
-            corridors.Add(new Corridor(currentRoomCenter, new Vector2((int)prevRoomCenter.X, (int)currentRoomCenter.Y)));
-          /*} else {
-            corridors.Add(new Corridor());
-          }*/
+          if (this.random.Next(0, 1) == 0) { // TODO different corridor alignment
+            corridors.Add(new Corridor(prevRoomCenter, new Vector2((int)prevRoomCenter.X, (int)currentRoomCenter.Y))); // |
+            corridors.Add(new Corridor(currentRoomCenter, new Vector2((int)prevRoomCenter.X, (int)currentRoomCenter.Y))); // -
+          } else {
+            corridors.Add(new Corridor(prevRoomCenter, new Vector2((int)currentRoomCenter.X, (int)prevRoomCenter.Y))); // |
+            corridors.Add(new Corridor(currentRoomCenter, new Vector2((int)currentRoomCenter.X, (int)prevRoomCenter.Y))); // -
+          }
         }
         prevRoom = room;
       }
