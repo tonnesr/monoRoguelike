@@ -11,8 +11,8 @@ using Microsoft.Xna.Framework.Content;
 using System.Linq;
 using mono2.src.models.mapping;
 
-// TODO move map generation to another class
-// TODO better map generation (random levels and entities)
+// TODO Better map generation (random levels and entities)
+// TODO Scrollable maps
 
 namespace mono2.src.mapping
 {
@@ -85,14 +85,13 @@ namespace mono2.src.mapping
     }
     
     public bool canWalk(int x, int y) {
-      try { // TODO fix when implementing scrolling maps
+      try {
         Tile tile = this.map[x, y];
         if (tile.movement == TileMovementType.Impassable) {
           return false;
         }
         return true;
       } catch (Exception) {
-        Console.WriteLine($"Illegal move at x:{x}, y: {y}");
         return false;
       }
     }

@@ -19,23 +19,18 @@ namespace mono2.src.mapping
       int height = mapSize.height;
 
       Tile[,] map = new Tile[width, height];
-      List<Room> rooms = this.generateRooms(100, 3, 10, mapSize); // TODO
+      List<Room> rooms = this.generateRooms(100, 3, 9, mapSize); // TODO
       List<Corridor> corridors = this.generateCorridors(rooms);
       Console.WriteLine($"Room count: {rooms.Count}, Corridor count: {corridors.Count}");
       // TODO generate corridors
 
       for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
-          Tile newTile = new Tile("floor1", x, y, TileType.Floor, Color.Gray, TileMovementType.Walkable); // TODO remove with empty tile? (when implementing inside of rooms filling stuff v)
+          Tile newTile = new Tile("empty1", x, y, TileType.Wall, Color.Gray, TileMovementType.Impassable); // TODO remove with empty tile? (when implementing inside of rooms filling stuff v)
 
-          foreach (Room room in rooms) { // TODO fill inside of rooms with floor, not outside (need to fix spawning etc.)
-            if (
-              (x >= room.topPos.X && x <= room.bottomPos.X && y == room.topPos.Y) || 
-              (x >= room.topPos.X && x <= room.bottomPos.X && y == room.bottomPos.Y) || 
-              (y >= room.topPos.Y && y <= room.bottomPos.Y && x == room.topPos.X) || 
-              (y >= room.topPos.Y && y <= room.bottomPos.Y && x == room.bottomPos.X)
-            ) {
-              newTile = new Tile("wall1", x, y, TileType.Wall, Color.Gray, TileMovementType.Impassable);
+          foreach (Room room in rooms) {
+            if ((x >= room.topPos.X && x <= room.bottomPos.X) && (y >= room.topPos.Y && y <= room.bottomPos.Y)) {
+              newTile = new Tile("floor1", x, y, TileType.Floor, Color.Gray, TileMovementType.Walkable);
               break;
             }
           }
@@ -47,7 +42,7 @@ namespace mono2.src.mapping
               (y <= corridor.bottomPos.Y && y >= corridor.topPos.Y && x == corridor.topPos.X) ||
               (y <= corridor.topPos.Y && y >= corridor.bottomPos.Y && x == corridor.bottomPos.X) 
             ) {
-              newTile = new Tile("corridor1", x, y, TileType.Floor, Color.Gray, TileMovementType.Walkable);
+              newTile = new Tile("floor1", x, y, TileType.Floor, Color.Gray, TileMovementType.Walkable);
               break;
             }
           }

@@ -14,11 +14,9 @@ namespace mono2
 {
   public class Game1 : Game {
     private static int tileDiameter = 16;
-    private static int sidePanelWidth = 8 * tileDiameter;
     private static int bottomMenuHeight = 8 * tileDiameter;
-    private Size mapSize = new Size(64, 64); // TODO scorllable level
-    private static Size gameSize = new Size(64, 64); // TODO scrollable level
-
+    
+    private Size mapSize = new Size(64, 48);
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     private TileMap map;
@@ -28,7 +26,7 @@ namespace mono2
 
     public Game1() {
       this.graphics = new GraphicsDeviceManager(this);
-      this.graphics.PreferredBackBufferWidth = (mapSize.width * tileDiameter) + sidePanelWidth;
+      this.graphics.PreferredBackBufferWidth = (mapSize.width * tileDiameter);
       this.graphics.PreferredBackBufferHeight = (mapSize.height * tileDiameter) + bottomMenuHeight;
       this.Content.RootDirectory = "Content";
       this.IsMouseVisible = true;
@@ -38,7 +36,7 @@ namespace mono2
     }
 
     protected override void Initialize() {
-      map = new TileMap(tileDiameter, this.mapSize, this.Content, Color.Gray, new List<Entity>() { new Player(PlayerIndex.One, 1, 1, Color.OrangeRed), new Player(PlayerIndex.Two, 1, 1, Color.Teal) });
+      map = new TileMap(tileDiameter, this.mapSize, this.Content, Color.Gray, new List<Entity>() { new Player(PlayerIndex.One, 5, 5, Color.OrangeRed), new Player(PlayerIndex.Two, 5, 6, Color.Teal) });
       
       base.Initialize();
     }
